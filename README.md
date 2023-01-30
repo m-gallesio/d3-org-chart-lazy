@@ -1,0 +1,1 @@
+An extension to [d3-org-chart](https://github.com/bumbeishvili/org-chart) which enables lazy loading.
