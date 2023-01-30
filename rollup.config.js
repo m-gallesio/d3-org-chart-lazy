@@ -6,8 +6,6 @@ import config from "./package.json" assert { type: "json" };
 
 rmSync("./dist", { force: true, recursive: true });
 
-const name = "d3-org-chart-lazy";
-
 export default [{
     input: "src/index.ts",
     external: ["d3-org-chart"],
@@ -15,7 +13,8 @@ export default [{
         {
             file: config.main,
             format: "umd",
-            name,
+            name: "d3",
+            extend: true,
             globals: {
                 "d3-org-chart": "d3"
             }
@@ -23,13 +22,17 @@ export default [{
         {
             file: config.module,
             format: "es",
-            name: config.name
+            name: "d3",
+            extend: true,
+            globals: {
+                "d3-org-chart": "d3"
+            }
         },
         {
             file: `${config.main.replace('.js', '')}.min.js`,
             format: "umd",
-            name,
-            plugins: [terser()],
+            name: "d3",
+            extend: true,
             globals: {
                 "d3-org-chart": "d3"
             }
@@ -37,7 +40,11 @@ export default [{
         {
             file: `${config.module.replace('.js', '')}.min.js`,
             format: "es",
-            name: config.name,
+            name: "d3",
+            extend: true,
+            globals: {
+                "d3-org-chart": "d3"
+            },
             plugins: [terser()]
         }
     ],

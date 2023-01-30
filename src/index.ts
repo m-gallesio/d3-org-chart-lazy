@@ -28,7 +28,7 @@ export class LazyOrgChart<Datum extends {}> extends OrgChart<Datum> {
 
         Object.keys(l).forEach((k) => {
             //@ts-ignore
-            this[k] = function (_) { return _ ? l[k] : (l[k] = _, this); };
+            this[k] = function (t) { return t ? (l[k] = t, this) : l[k]; };
         });
     }
 
