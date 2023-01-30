@@ -1,28 +1,36 @@
 {
-	"name": "d3-org-chart-lazy",
-	"license": "MIT",
-	"author": {
-		"name": "Matteo Gallesio"
-	},
-	"version": "0.0.1",
-	"type": "module",
-	"main": "dist/index.js",
-	"module": "dist/index.esm.js",
-	"devDependencies": {
-		"@rollup/plugin-terser": "^0.4.0",
-		"@rollup/plugin-typescript": "^11.0.0",
-		"@types/d3-hierarchy": "^3.1.2",
-		"@types/d3-org-chart": "^2.6.3",
-		"rollup": "^3.12.0",
-		"terser": "^5.16.1",
-		"tslib": "^2.5.0",
-		"typescript": "^4.9.4"
-	},
-	"peerDependencies": {
-		"d3-org-chart": "^2.6.0"
-	},
-	"scripts": {
-		"build": "rollup -c",
-		"clean": "rm -fr dist"
-	}
+  "name": "d3-org-chart-lazy",
+  "license": "MIT",
+  "author": "Matteo Gallesio",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/d3-org-chart-lazy.js",
+  "module": "dist/d3-org-chart-lazy.esm.js",
+  "types": "dist/types/index.d.ts",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/d3-hierarchy": "^3.1.2",
+    "@types/d3-org-chart": "^2.6.3",
+    "rollup": "^3.12.0",
+    "terser": "^5.16.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.4"
+  },
+  "peerDependencies": {
+    "d3-org-chart": "^2.6.0"
+  },
+  "scripts": {
+    "build": "rollup -c ./build/rollup.config.js",
+    "clean": "rm -fr dist"
+  },
+  "description": "An extension to [d3-org-chart](https://github.com/bumbeishvili/org-chart) which enables lazy loading.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-gallesio/d3-org-chart-lazy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/m-gallesio/d3-org-chart-lazy/issues"
+  },
+  "homepage": "https://github.com/m-gallesio/d3-org-chart-lazy#readme"
 }
