@@ -1,5 +1,6 @@
 import { type HierarchyNode } from "d3-hierarchy";
 import { OrgChart, type Point } from "d3-org-chart";
+import { select } from "d3-selection";
 
 export class LazyOrgChart<Datum extends {}> extends OrgChart<Datum> {
 
@@ -11,9 +12,14 @@ export class LazyOrgChart<Datum extends {}> extends OrgChart<Datum> {
     //@ts-ignore
     hasChildren(func: (d: Datum) => boolean): this;
 
+    afterUpdate(): () => void;
+    //@ts-ignore
+    afterUpdate(func: () => void): this;
+
     public readonly getLazyLoadingAttrs: () => {
         loadChildren: (d: Datum) => Promise<Datum[]>;
         hasChildren: (d: Datum) => boolean;
+        afterUpdate: () => void;
     };
 
     // The attribute initialization is modeled after the one in the original library.
@@ -22,9 +28,9 @@ export class LazyOrgChart<Datum extends {}> extends OrgChart<Datum> {
         const l = {
             loadChildren: () => Promise.resolve([]),
             hasChildren: () => false,
+            afterUpdate: () => { /* nop */ },
         };
         this.getLazyLoadingAttrs = () => l;
-
 
         Object.keys(l).forEach((k) => {
             //@ts-ignore
@@ -71,11 +77,14 @@ export class LazyOrgChart<Datum extends {}> extends OrgChart<Datum> {
 
     override update(params: { x0: number; y0: number; width: number; height: number; } & Partial<Point>) {
         super.update(params);
-        for (const node of document.querySelectorAll(this.getChartState().container + " .node-button-g")) {
-            if (node.querySelector(".node-button-div")?.childElementCount) {
-                node.removeAttribute("display");
-                node.removeAttribute("opacity");
+        this.getLazyLoadingAttrs().afterUpdate?.();
+        const container = select(this.getChartState().container).node() as Element;
+        if (container)
+            for (const node of container.querySelectorAll(".node-button-g")) {
+                if (node.querySelector(".node-button-div")?.childElementCount) {
+                    node.removeAttribute("display");
+                    node.removeAttribute("opacity");
+                }
             }
-        }
     };
 }
